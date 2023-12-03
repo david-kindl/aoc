@@ -70,8 +70,3 @@ class Solve(Solution):
                 except KeyError:
                     pass
         return [n[1] for n in neighbours]
-
-
-if __name__ == '__main__':
-    solution = Solve('/home/david/repo/aoc/cache/2023/day_3.txt')
-    print(solution)
