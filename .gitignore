@@ -235,3 +235,6 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+# Cached input is excluded from repo (path tree remains as is)
+cache/*/*
