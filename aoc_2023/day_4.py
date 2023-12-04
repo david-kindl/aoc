@@ -35,9 +35,10 @@ class Solve(Solution):
     def __parse(self):
         cards = {i + 1: {} for i in range(len(self.raw_data))}
         for i, line in enumerate(self.raw_data):
+            card = i + 1
             num_sets = line.split(':')[1]
-            cards[i + 1]['sets'] = self.__get_sets(num_sets)
-            cards[i + 1]['score'] = self.__get_scores(cards[i + 1]['sets'])
+            cards[card]['sets'] = self.__get_sets(num_sets)
+            cards[card]['score'] = self.__get_scores(cards[card]['sets'])
         return cards
 
     @staticmethod
