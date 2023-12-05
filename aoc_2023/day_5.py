@@ -14,7 +14,7 @@ class Solve(Solution):
     def part_2(self):
         pass
 
-    def __get_data(self):
+    def __get_data(self) -> dict[str, list[tuple[int]]]:
         locations = {}
         with open(self.file_name) as fl:
             for line in fl.readlines():
