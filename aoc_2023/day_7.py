@@ -66,8 +66,3 @@ class Solve(Solution):
         except KeyError:
             val = int(card)
         return val
-
-
-if __name__ == '__main__':
-    solution = Solve('/home/david/repo/aoc/cache/2023/day_7.txt')
-    print(solution)
