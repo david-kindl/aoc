@@ -5,14 +5,30 @@ class Solve(Solution):
     def __init__(self, file_name: str) -> None:
         self.file_name = file_name
         self.__get_pipes()
+        self.loop = self.__get_loop()
 
     @property
     def part_1(self) -> any:
-        return int((len(self.__get_loop()) + 1) / 2)
+        return int((len(self.loop) + 1) / 2)
 
     @property
-    def part_2(self) -> any:
-        pass
+    def part_2(self) -> int:
+        """
+        Calculating polygon are with shoelace formula
+        Source for that formula: https://www.101computing.net/the-shoelace-algorithm/
+        :return:
+        """
+        num_of_coord = len(self.loop)
+        sum1 = 0
+        sum2 = 0
+        for i in range(num_of_coord - 1):
+            sum1 += self.loop[i][0] * self.loop[i + 1][1]
+            sum2 += self.loop[i][1] * self.loop[i + 1][0]
+        sum1 = sum1 + self.loop[num_of_coord - 1][0] * self.loop[0][1]
+        sum2 = sum2 + self.loop[0][0] * self.loop[num_of_coord - 1][1]
+
+        #  number of enclosed tiles: area of the polygon - longest distance in the loop + 1
+        return -(-(abs(sum1 - sum2)) // 2) - self.part_1 + 1
 
     def __get_start_dirs(self) -> list[tuple[int, int]]:
         ret = []
@@ -20,7 +36,6 @@ class Solve(Solution):
         for x, y in ((-1, 0), (1, 0), (0, -1), (0, 1)):
             curr_x, curr_y = start_x + x, start_y + y
             if curr_x not in (self.x_len, -1) and curr_y not in (self.y_len, -1):
-                print(curr_x, curr_y)
                 curr_node = self.pipes[curr_y][curr_x]
                 if self.start_loc in self.__decode_pipes(curr_x, curr_y, curr_node):
                     ret.append((x, y))
@@ -74,20 +89,12 @@ class Solve(Solution):
             return dist
 
     def __str__(self):
-        directions = self.__get_loop()
         prnt = ''
         for i, line in enumerate(self.pipes):
             for j, pipe in enumerate(line):
-                if pipe == '.':
-                    prnt += '\033[31m' + pipe
-                elif (j, i) in directions:
+                if (j, i) in self.loop:
                     prnt += '\033[32m' + pipe
                 else:
-                    prnt += '\033[37m' + pipe
+                    prnt += '\033[31m' + '.'
             prnt += '\n'
         return '\n'.join((super().__str__(), prnt))
-
-
-if __name__ == '__main__':
-    s = Solve('/home/david/repo/aoc/cache/2023/day_10.txt')
-    print(s)
