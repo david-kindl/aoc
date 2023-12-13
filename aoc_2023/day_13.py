@@ -56,8 +56,3 @@ class Solve(Solution):
             if diff / 11 == num_diff:  # Abs difference between a dot and a hash mark is 11.
                 return i
         return 0
-
-
-if __name__ == '__main__':
-    s = Solve('/home/david/repo/aoc/cache/2023/day_13.txt')
-    print(s)
