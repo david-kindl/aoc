@@ -12,7 +12,7 @@ class Solve(Solution):
         return sum(scores)
 
     @property
-    def part_2 (self) -> any:
+    def part_2(self) -> any:
         boxes = self.__box_lenses()
         focusing_power = 0
         for box, content in boxes.items():
@@ -46,9 +46,3 @@ class Solve(Solution):
             curr_value *= 17
             curr_value %= 256
         return curr_value
-
-
-if __name__ == '__main__':
-    s = Solve('/home/david/repo/aoc/cache/2023/day_15.txt')
-    print(s)
-
