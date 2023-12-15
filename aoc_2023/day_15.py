@@ -13,12 +13,30 @@ class Solve(Solution):
 
     @property
     def part_2 (self) -> any:
-        pass
+        boxes = self.__box_lenses()
+        focusing_power = 0
+        for box, content in boxes.items():
+            for i, fl in enumerate(content.values()):
+                focusing_power += (box + 1) * (i + 1) * fl
+        return focusing_power
 
     def __parse(self):
         with open(self.file_name, 'r') as fl:
             sequence = [val for seq in fl.readlines() for val in seq.strip('\n').split(',')]
         return sequence
+
+    def __box_lenses(self) -> dict[int, dict[str, int]]:
+        boxes = {_: {} for _ in range(0, 256)}
+        for seq in self.sequences:
+            if '=' in seq:
+                label, focal_length = seq.split('=')
+                box = self.__build_hash(label)
+                boxes[box][label] = int(focal_length)
+            else:
+                label = seq.split('-')[0]
+                box = self.__build_hash(label)
+                boxes[box].pop(label, None)
+        return boxes
 
     @staticmethod
     def __build_hash(string: str) -> int:
@@ -32,4 +50,5 @@ class Solve(Solution):
 
 if __name__ == '__main__':
     s = Solve('/home/david/repo/aoc/cache/2023/day_15.txt')
-    print(s.part_1)
+    print(s)
+
